@@ -12,9 +12,13 @@
     <!-- Navsat -->
     <node pkg="robot_localization" type="navsat_transform_node" name="navsat" respawn="true">
         <!-- <rosparam param="datum">[42.35893211, -71.09345588, 0.0, world, base_link]</rosparam> -->
-        <remap from="imu/data" to="imu_correct" />
-        <remap from="gps/fix" to="gps/fix" />
-        <remap from="odometry/filtered" to="odometry/navsat" />
+        <remap from="/imu/data" to="/ms/imu/data" />
+        <remap from="/gps/fix" to="/antobot_gps" />
+        <remap from="/odometry/filtered" to="/odometry/gps" />
     </node>
+
+    <!-- Static transforms -->
+    <node pkg="tf" type="static_transform_publisher" name="gps_frame" args="0 0 0 0 0 0 base_link gps 10"/>
+    <node pkg="tf" type="static_transform_publisher" name="imu_link" args="0 0 0 0 0 0 base_link base_imu_link 10"/>
 
 </launch>
